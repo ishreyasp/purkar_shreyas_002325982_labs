@@ -13,6 +13,7 @@ import model.VitalSignsHistory;
 public class MainJFrame extends javax.swing.JFrame {
 
     VitalSignsHistory vitalSignsHistory;
+    
     /**
      * Creates new form MainJFrame
      */
@@ -76,7 +77,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(btnCreateVitals)
                 .addGap(53, 53, 53)
                 .addComponent(btnViewVitals)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(464, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(controlPanel);
@@ -87,11 +88,11 @@ public class MainJFrame extends javax.swing.JFrame {
         workArea.setLayout(workAreaLayout);
         workAreaLayout.setHorizontalGroup(
             workAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGap(0, 651, Short.MAX_VALUE)
         );
         workAreaLayout.setVerticalGroup(
             workAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 635, Short.MAX_VALUE)
         );
 
         splitPane.setRightComponent(workArea);
@@ -100,21 +101,32 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to handle create vitals button event
+     * 
+     * @param evt create vitals button event
+     */
     private void btnCreateVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateVitalsActionPerformed
         CreateJPanel createPanel = new CreateJPanel(vitalSignsHistory);
         splitPane.setRightComponent(createPanel);
     }//GEN-LAST:event_btnCreateVitalsActionPerformed
 
+    
+   /**
+    * Method to handle view vitals button event
+    * 
+    * @param evt view vitals button event
+    */
     private void btnViewVitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewVitalsActionPerformed
         ViewJPanel viewPanel = new ViewJPanel(vitalSignsHistory);
         splitPane.setRightComponent(viewPanel);
