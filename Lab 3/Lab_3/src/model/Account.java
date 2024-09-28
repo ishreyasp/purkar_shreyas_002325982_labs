@@ -60,4 +60,10 @@ public class Account {
     public void setBalance(int balance) {
         this.balance = balance;
     }
+
+    @Override
+    public String toString() {
+        return getBankName();
+    }
+   
 }

@@ -4,17 +4,27 @@
  */
 package ui.accountManager;
 
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import model.AccountDirectory;
+
 /**
  *
  * @author purka
  */
 public class AccountMngWorkArea extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private AccountDirectory accountDirectory;
+    
     /**
      * Creates new form AccountMngWorkArea
      */
-    public AccountMngWorkArea() {
+    public AccountMngWorkArea(JPanel userProcessContainer) {
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        accountDirectory = new AccountDirectory();
     }
 
     /**
@@ -31,9 +41,19 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
 
         btnCrtAcc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/create.png"))); // NOI18N
         btnCrtAcc.setText("Create Account");
+        btnCrtAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrtAccActionPerformed(evt);
+            }
+        });
 
         btnMngAcc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/manage.png"))); // NOI18N
         btnMngAcc.setText("Manage Account");
+        btnMngAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMngAccActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -59,6 +79,26 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
                 .addContainerGap(445, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCrtAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrtAccActionPerformed
+        CreateAccountJPanel panel = new CreateAccountJPanel(userProcessContainer, 
+                accountDirectory);
+        userProcessContainer.add("CreateAccountJPanel", panel);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
+        
+    }//GEN-LAST:event_btnCrtAccActionPerformed
+
+    private void btnMngAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMngAccActionPerformed
+        ManageAccountsJPanel panel = new ManageAccountsJPanel(userProcessContainer, 
+                accountDirectory);
+        userProcessContainer.add("ManageAccountsJPanel", panel);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnMngAccActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

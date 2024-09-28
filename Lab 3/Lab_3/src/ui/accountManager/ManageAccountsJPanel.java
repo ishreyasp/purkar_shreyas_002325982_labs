@@ -4,17 +4,31 @@
  */
 package ui.accountManager;
 
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import model.Account;
+import model.AccountDirectory;
+
 /**
  *
  * @author purka
  */
 public class ManageAccountsJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private AccountDirectory accountDirectory;
+    
     /**
      * Creates new form ManageAccountsJPanel
      */
-    public ManageAccountsJPanel() {
+    public ManageAccountsJPanel(JPanel userProcessContainer, AccountDirectory accountDirectory) {
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.accountDirectory = accountDirectory;
+        
+        populateAccountsTable();
     }
 
     /**
@@ -69,7 +83,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/accountManager/view.png"))); // NOI18N
+        btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/view.png"))); // NOI18N
         btnView.setText("View Details");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,7 +91,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/accountManager/delete.png"))); // NOI18N
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/delete.png"))); // NOI18N
         btnDelete.setText("Delete Account");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,12 +139,15 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
                 .addComponent(btnView)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -156,4 +173,20 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblAccounts;
     private javax.swing.JTextField txtSearchBox;
     // End of variables declaration//GEN-END:variables
+
+    private void populateAccountsTable() {        
+        DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
+        model.setRowCount(0);
+        
+        for(Account account : accountDirectory.getAccounts()) {
+            
+            Object[] row = new Object[4];
+            row[0] = account;
+            row[1] = account.getAccountNumber();
+            row[2] = account.getRoutingNumber();
+            row[3] = account.getBalance();
+            
+            model.addRow(row);
+        }
+    }
 }

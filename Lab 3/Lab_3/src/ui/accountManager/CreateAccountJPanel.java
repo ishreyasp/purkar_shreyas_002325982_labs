@@ -4,17 +4,29 @@
  */
 package ui.accountManager;
 
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import model.Account;
+import model.AccountDirectory;
+
 /**
  *
  * @author purka
  */
 public class CreateAccountJPanel extends javax.swing.JPanel {
+    
+    private JPanel userProcessContainer;
+    private AccountDirectory accountDirectory;
 
     /**
      * Creates new form CreateAccountJPanel
      */
-    public CreateAccountJPanel() {
+    public CreateAccountJPanel(JPanel userProcessContainer, AccountDirectory accountDirectory) {
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.accountDirectory = accountDirectory;
     }
 
     /**
@@ -40,7 +52,7 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         btnCreateAcc = new javax.swing.JButton();
 
         btnBack.setBackground(new java.awt.Color(242, 242, 242));
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/accountManager/Custom-Icon-Design-Flatastic-1-Back.24.png"))); // NOI18N
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/back-button.png"))); // NOI18N
         btnBack.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnBack.setPreferredSize(new java.awt.Dimension(10, 10));
@@ -70,7 +82,12 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         lblBalance.setText("Balance:");
 
         btnCreateAcc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/create.png"))); // NOI18N
-        btnCreateAcc.setText("Create");
+        btnCreateAcc.setText("Create Account");
+        btnCreateAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateAccActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -107,8 +124,8 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
                 .addContainerGap(62, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnCreateAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(299, 299, 299))
+                .addComponent(btnCreateAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(239, 239, 239))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lblAccNum, lblBalance, lblBankName, lblRoutingNum});
@@ -153,8 +170,54 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccActionPerformed
+        int balance = 0;
+        
+        if(txtAccNum.getText().isBlank() 
+            || txtBalance.getText().isBlank() 
+            || txtRoutingNum.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, 
+                "All fields are mandatory", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            balance = Integer.parseInt(txtBalance.getText()); 
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Please check the balance input", 
+                "Warning", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Account account = new Account();
+        account.setAccountNumber(txtAccNum.getText());
+        account.setBalance(balance);
+        account.setBankName(txtBankName.getText());
+        account.setRoutingNumber(txtRoutingNum.getText());
+        accountDirectory.addAccount(account);
+        
+        JOptionPane.showMessageDialog(this, 
+                "Account Successfully Created", 
+                "Success", 
+                JOptionPane.INFORMATION_MESSAGE);
+        
+        txtAccNum.setText("");
+        txtRoutingNum.setText("");
+        txtBankName.setText("");
+        txtBalance.setText("");
+                
+    }//GEN-LAST:event_btnCreateAccActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,9 @@
  */
 package ui;
 
+import java.awt.CardLayout;
+import ui.accountManager.AccountMngWorkArea;
+
 /**
  *
  * @author purka
@@ -29,13 +32,19 @@ public class MainJFrame extends javax.swing.JFrame {
         splitPane = new javax.swing.JSplitPane();
         topPanel = new javax.swing.JPanel();
         btnAccMng = new javax.swing.JButton();
-        userProcess = new javax.swing.JPanel();
+        userProcessContainer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        btnAccMng.setBackground(new java.awt.Color(153, 204, 255));
         btnAccMng.setText("Open Account Manager Work Area");
+        btnAccMng.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccMngActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -50,24 +59,14 @@ public class MainJFrame extends javax.swing.JFrame {
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btnAccMng)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(btnAccMng, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         splitPane.setTopComponent(topPanel);
 
-        javax.swing.GroupLayout userProcessLayout = new javax.swing.GroupLayout(userProcess);
-        userProcess.setLayout(userProcessLayout);
-        userProcessLayout.setHorizontalGroup(
-            userProcessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        userProcessLayout.setVerticalGroup(
-            userProcessLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
-        );
-
-        splitPane.setRightComponent(userProcess);
+        userProcessContainer.setLayout(new java.awt.CardLayout());
+        splitPane.setRightComponent(userProcessContainer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,11 +76,19 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAccMngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccMngActionPerformed
+        AccountMngWorkArea panel = new AccountMngWorkArea(userProcessContainer);
+        userProcessContainer.add("AccountMngWorkArea", panel);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_btnAccMngActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,6 +129,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAccMng;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JPanel topPanel;
-    private javax.swing.JPanel userProcess;
+    private javax.swing.JPanel userProcessContainer;
     // End of variables declaration//GEN-END:variables
 }

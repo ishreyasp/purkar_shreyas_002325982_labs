@@ -32,8 +32,7 @@ public class AccountDirectory {
      * 
      * @return account object
      */
-    public Account addAccount() {
-        Account account = new Account();
+    public Account addAccount(Account account) {
         accounts.add(account);
         return account;
     }
