@@ -5,6 +5,7 @@
 package ui.accountManager;
 
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
@@ -159,7 +160,28 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tblAccounts.getSelectedRow();
+        
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, 
+                    "First select a row", 
+                    "Warning", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
+        Account selectedAccount = (Account) model.getValueAt(selectedRow, 0);
+        
+        if (selectedAccount != null) {
+            accountDirectory.deleteAccount(selectedAccount);
+            JOptionPane.showMessageDialog(this, 
+                    "Vital Sign deleted!", 
+                    "Success", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        populateAccountsTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 
