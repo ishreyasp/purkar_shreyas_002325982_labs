@@ -16,7 +16,7 @@ public class AccountDirectory {
     private ArrayList<Account> accounts;
 
     public AccountDirectory() {
-        accounts = new ArrayList<Account>();
+        accounts = new ArrayList<>();
     }
 
     public ArrayList<Account> getAccounts() {
@@ -30,6 +30,7 @@ public class AccountDirectory {
     /**
      * Method to add new account
      * 
+     * @param account details object
      * @return account object
      */
     public Account addAccount(Account account) {
@@ -44,5 +45,20 @@ public class AccountDirectory {
      */
     public void deleteAccount(Account account) {
         accounts.remove(account);
+    }
+    
+    /**
+     * Method to search account number
+     * 
+     * @param accountNumber to search
+     * @return Account details associated with given account number
+     */
+    public Account searchAccountNumber(String accountNumber) {
+        for(Account account : accounts) {
+            if (account.getAccountNumber().contains(accountNumber)) {
+                return account;
+            }
+        }
+        return null;
     }
 }
