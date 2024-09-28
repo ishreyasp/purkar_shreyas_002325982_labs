@@ -156,7 +156,25 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tblAccounts.getSelectedRow();
+        
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, 
+                    "First select a row", 
+                    "Warning", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
+        Account selectedAccount = (Account) model.getValueAt(selectedRow, 0);
+        
+        ViewAccountJPanel panel = new ViewAccountJPanel(userProcessContainer, 
+                selectedAccount);
+        userProcessContainer.add("ViewAccountJPanel", panel);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

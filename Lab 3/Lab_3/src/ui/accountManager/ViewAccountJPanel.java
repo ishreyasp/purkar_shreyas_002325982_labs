@@ -4,17 +4,29 @@
  */
 package ui.accountManager;
 
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import model.Account;
+
 /**
  *
  * @author purka
  */
 public class ViewAccountJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private Account account;
+    
     /**
      * Creates new form ViewAccountJPanel
      */
-    public ViewAccountJPanel() {
+    public ViewAccountJPanel(JPanel userProcessContainer, Account account) {
         initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        
+        populateAccountDetails();
     }
 
     /**
@@ -148,7 +160,10 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        userProcessContainer.remove(this);
+        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
@@ -173,4 +188,10 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtBankName;
     private javax.swing.JTextField txtRoutingNum;
     // End of variables declaration//GEN-END:variables
+
+    private void populateAccountDetails() {
+        txtAccNum.setText(account.getAccountNumber());
+        txtRoutingNum.setText(account.getRoutingNumber());
+        txtBankName.setText(account.getBankName());
+    }
 }
