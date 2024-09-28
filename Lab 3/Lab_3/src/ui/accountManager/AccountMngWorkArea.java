@@ -29,8 +29,10 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
         btnCrtAcc = new javax.swing.JButton();
         btnMngAcc = new javax.swing.JButton();
 
+        btnCrtAcc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/create.png"))); // NOI18N
         btnCrtAcc.setText("Create Account");
 
+        btnMngAcc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/manage.png"))); // NOI18N
         btnMngAcc.setText("Manage Account");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -42,7 +44,7 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCrtAcc)
                     .addComponent(btnMngAcc))
-                .addContainerGap(663, Short.MAX_VALUE))
+                .addContainerGap(635, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCrtAcc, btnMngAcc});
@@ -54,7 +56,7 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
                 .addComponent(btnCrtAcc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMngAcc)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addContainerGap(445, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
