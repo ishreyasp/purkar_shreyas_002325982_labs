@@ -180,7 +180,7 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         int balance = 0;
         
         if(txtAccNum.getText().isBlank() 
-            || txtBalance.getText().isBlank() 
+            || txtBankName.getText().isBlank() 
             || txtRoutingNum.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, 
                 "All fields are mandatory", 

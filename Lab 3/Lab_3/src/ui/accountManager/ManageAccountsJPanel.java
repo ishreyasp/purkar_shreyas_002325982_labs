@@ -152,7 +152,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -166,8 +166,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
             return;
         }
         
-        DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
-        Account selectedAccount = (Account) model.getValueAt(selectedRow, 0);
+        Account selectedAccount = (Account) tblAccounts.getValueAt(selectedRow, 0);
         
         ViewAccountJPanel panel = new ViewAccountJPanel(userProcessContainer, 
                 selectedAccount);
@@ -188,18 +187,22 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
             return;
         }
         
-        DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
-        Account selectedAccount = (Account) model.getValueAt(selectedRow, 0);
-        
-        if (selectedAccount != null) {
+        int dialogResult = JOptionPane.showConfirmDialog(this, 
+                    "Are you sure you want to delete this account?" ,
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            
+        if (dialogResult == JOptionPane.YES_NO_OPTION) {
+            Account selectedAccount = (Account) tblAccounts.getValueAt(selectedRow, 0);
+                
             accountDirectory.deleteAccount(selectedAccount);
+                
             JOptionPane.showMessageDialog(this, 
-                    "Vital Sign deleted!", 
+                    "Account deleted!", 
                     "Success", 
                     JOptionPane.INFORMATION_MESSAGE);
+            populateAccountsTable();
         }
-        
-        populateAccountsTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 
@@ -214,7 +217,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtSearchBox;
     // End of variables declaration//GEN-END:variables
 
-    private void populateAccountsTable() {        
+    public void populateAccountsTable() {        
         DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
         model.setRowCount(0);
         

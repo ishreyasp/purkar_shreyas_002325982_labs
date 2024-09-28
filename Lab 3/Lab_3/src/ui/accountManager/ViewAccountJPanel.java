@@ -5,6 +5,8 @@
 package ui.accountManager;
 
 import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import model.Account;
 
@@ -27,6 +29,7 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         this.account = account;
         
         populateAccountDetails();
+        setViewMode();
     }
 
     /**
@@ -162,16 +165,40 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         userProcessContainer.remove(this);
         
+        Component[] panelStack = userProcessContainer.getComponents();
+        JPanel lastPanel = (JPanel) panelStack[panelStack.length - 1];
+        ManageAccountsJPanel panel = (ManageAccountsJPanel) lastPanel;
+        panel.populateAccountsTable();
+        
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        if(txtAccNum.getText().isBlank() 
+            || txtBankName.getText().isBlank() 
+            || txtRoutingNum.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, 
+                "All fields are mandatory", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        account.setAccountNumber(txtAccNum.getText());
+        account.setBankName(txtBankName.getText());
+        account.setRoutingNumber(txtRoutingNum.getText());
+        
+        JOptionPane.showMessageDialog(this, 
+                    "Account details updated", 
+                    "Warning", 
+                    JOptionPane.WARNING_MESSAGE);
+        
+        setViewMode();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+        setEditMode();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 
@@ -193,5 +220,23 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         txtAccNum.setText(account.getAccountNumber());
         txtRoutingNum.setText(account.getRoutingNumber());
         txtBankName.setText(account.getBankName());
+    }
+
+    private void setViewMode() {
+        txtAccNum.setEnabled(false);
+        txtRoutingNum.setEnabled(false);
+        txtBankName.setEnabled(false);
+        
+        btnSave.setEnabled(false);
+        btnUpdate.setEnabled(true);
+    }
+    
+    private void setEditMode() {
+        txtAccNum.setEnabled(true);
+        txtRoutingNum.setEnabled(true);
+        txtBankName.setEnabled(true);
+        
+        btnSave.setEnabled(true);
+        btnUpdate.setEnabled(false);
     }
 }
