@@ -11,8 +11,9 @@ import javax.swing.JPanel;
 import model.Account;
 
 /**
- *
- * @author purka
+ * Class to view account details
+ * 
+ * @author Shreyas Purkar
  */
 public class ViewAccountJPanel extends javax.swing.JPanel {
 
@@ -162,6 +163,11 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to perform back page navigation
+     * 
+     * @param evt 
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         userProcessContainer.remove(this);
         
@@ -174,6 +180,11 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * Method to save account details
+     * 
+     * @param evt 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(txtAccNum.getText().isBlank() 
             || txtBankName.getText().isBlank() 
@@ -197,6 +208,11 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         setViewMode();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Method to update account details
+     * 
+     * @param evt 
+     */
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         setEditMode();
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -216,12 +232,18 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtRoutingNum;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Method to populate accounts table
+     */
     private void populateAccountDetails() {
         txtAccNum.setText(account.getAccountNumber());
         txtRoutingNum.setText(account.getRoutingNumber());
         txtBankName.setText(account.getBankName());
     }
 
+    /**
+     * Method to view account details in view mode
+     */
     private void setViewMode() {
         txtAccNum.setEnabled(false);
         txtRoutingNum.setEnabled(false);
@@ -231,6 +253,9 @@ public class ViewAccountJPanel extends javax.swing.JPanel {
         btnUpdate.setEnabled(true);
     }
     
+    /**
+     * Method to view account details in edit mode
+     */
     private void setEditMode() {
         txtAccNum.setEnabled(true);
         txtRoutingNum.setEnabled(true);

@@ -11,8 +11,9 @@ import model.Account;
 import model.AccountDirectory;
 
 /**
- *
- * @author purka
+ * Class to create account
+ * 
+ * @author Shreyas Purkar
  */
 public class CreateAccountJPanel extends javax.swing.JPanel {
     
@@ -169,6 +170,11 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
 
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to perform back page navigation
+     * 
+     * @param evt 
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         userProcessContainer.remove(this);
         
@@ -176,6 +182,11 @@ public class CreateAccountJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * Method to create account
+     * 
+     * @param evt 
+     */
     private void btnCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccActionPerformed
         int balance = 0;
         

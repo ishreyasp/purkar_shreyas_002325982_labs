@@ -8,8 +8,9 @@ import java.awt.CardLayout;
 import ui.accountManager.AccountMngWorkArea;
 
 /**
- *
- * @author purka
+ * Class for main frame
+ * 
+ * @author Shreyas Purkar
  */
 public class MainJFrame extends javax.swing.JFrame {
 
@@ -82,6 +83,11 @@ public class MainJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to open account management work area
+     * 
+     * @param evt 
+     */
     private void btnAccMngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccMngActionPerformed
         AccountMngWorkArea panel = new AccountMngWorkArea(userProcessContainer);
         userProcessContainer.add("AccountMngWorkArea", panel);

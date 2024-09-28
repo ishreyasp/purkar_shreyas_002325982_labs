@@ -12,8 +12,9 @@ import model.Account;
 import model.AccountDirectory;
 
 /**
- *
- * @author purka
+ * Class to manage account details
+ * 
+ * @author Shreyas Purkar
  */
 public class ManageAccountsJPanel extends javax.swing.JPanel {
 
@@ -68,12 +69,25 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
 
         tblAccounts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Bank Name", "Account Number", "Routing Number", "Balance"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         scrollPane.setViewportView(tblAccounts);
 
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/icons/search-btn.png"))); // NOI18N
@@ -144,6 +158,11 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to perform back page navigation
+     * 
+     * @param evt 
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         userProcessContainer.remove(this);
         
@@ -151,6 +170,11 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
         layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * Method to search account by account number
+     * 
+     * @param evt 
+     */
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         if (txtSearchBox.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, 
@@ -178,6 +202,11 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    /**
+     * Method to view account details
+     * 
+     * @param evt 
+     */
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         int selectedRow = tblAccounts.getSelectedRow();
         
@@ -199,6 +228,11 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
         layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewActionPerformed
 
+    /**
+     * Method to delete account
+     * 
+     * @param evt 
+     */
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         int selectedRow = tblAccounts.getSelectedRow();
         
@@ -240,6 +274,9 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtSearchBox;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Method to populate accounts table
+     */
     public void populateAccountsTable() {        
         DefaultTableModel model = (DefaultTableModel) tblAccounts.getModel();
         model.setRowCount(0);

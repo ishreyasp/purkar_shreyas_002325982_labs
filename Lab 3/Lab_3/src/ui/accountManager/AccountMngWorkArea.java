@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 import model.AccountDirectory;
 
 /**
- *
- * @author purka
+ * Class for account management
+ * 
+ * @author Shreyas Purkar
  */
 public class AccountMngWorkArea extends javax.swing.JPanel {
 
@@ -80,6 +81,11 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Method to create account 
+     * 
+     * @param evt 
+     */
     private void btnCrtAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrtAccActionPerformed
         CreateAccountJPanel panel = new CreateAccountJPanel(userProcessContainer, 
                 accountDirectory);
@@ -91,6 +97,11 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnCrtAccActionPerformed
 
+    /**
+     * Method to manage account
+     * 
+     * @param evt 
+     */
     private void btnMngAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMngAccActionPerformed
         ManageAccountsJPanel panel = new ManageAccountsJPanel(userProcessContainer, 
                 accountDirectory);

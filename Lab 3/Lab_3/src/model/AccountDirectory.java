@@ -55,7 +55,7 @@ public class AccountDirectory {
      */
     public Account searchAccountNumber(String accountNumber) {
         for(Account account : accounts) {
-            if (account.getAccountNumber().contains(accountNumber)) {
+            if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
             }
         }
