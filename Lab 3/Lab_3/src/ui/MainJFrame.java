@@ -145,6 +145,9 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel userProcessContainer;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Method to add dummy data
+     */
     private void generateDemoData() {
         Account firstAccount = new Account();
         firstAccount.setAccountNumber("1234567890");
