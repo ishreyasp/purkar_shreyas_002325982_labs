@@ -5,6 +5,8 @@
 package ui;
 
 import java.awt.CardLayout;
+import model.Account;
+import model.AccountDirectory;
 import ui.accountManager.AccountMngWorkArea;
 
 /**
@@ -14,11 +16,16 @@ import ui.accountManager.AccountMngWorkArea;
  */
 public class MainJFrame extends javax.swing.JFrame {
 
+    private AccountDirectory accountDirectory;
+    
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
+        
+        this.accountDirectory = new AccountDirectory();
+        generateDemoData();
     }
 
     /**
@@ -89,7 +96,7 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnAccMngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccMngActionPerformed
-        AccountMngWorkArea panel = new AccountMngWorkArea(userProcessContainer);
+        AccountMngWorkArea panel = new AccountMngWorkArea(userProcessContainer, accountDirectory);
         userProcessContainer.add("AccountMngWorkArea", panel);
         
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
@@ -137,4 +144,22 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel topPanel;
     private javax.swing.JPanel userProcessContainer;
     // End of variables declaration//GEN-END:variables
+
+    private void generateDemoData() {
+        Account firstAccount = new Account();
+        firstAccount.setAccountNumber("1234567890");
+        firstAccount.setRoutingNumber("7878787878");
+        firstAccount.setBankName("TD Bank");
+        firstAccount.setBalance(9999999);
+        
+        Account secondAccount = new Account();
+        secondAccount.setAccountNumber("10987654321");
+        secondAccount.setRoutingNumber("2581473690");
+        secondAccount.setBankName("Citizens Bank");
+        secondAccount.setBalance(9999999);
+        
+        accountDirectory.addAccount(firstAccount);
+        accountDirectory.addAccount(secondAccount);
+        
+    }
 }

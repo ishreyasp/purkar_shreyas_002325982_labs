@@ -21,11 +21,11 @@ public class AccountMngWorkArea extends javax.swing.JPanel {
     /**
      * Creates new form AccountMngWorkArea
      */
-    public AccountMngWorkArea(JPanel userProcessContainer) {
+    public AccountMngWorkArea(JPanel userProcessContainer, AccountDirectory accountDirectory) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        accountDirectory = new AccountDirectory();
+        this.accountDirectory = accountDirectory;
     }
 
     /**

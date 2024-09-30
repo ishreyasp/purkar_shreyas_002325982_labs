@@ -181,6 +181,7 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
                     "Please enter account number", 
                     "Warning", 
                     JOptionPane.WARNING_MESSAGE);
+            txtSearchBox.setText("");
             return;
         }
         
@@ -191,15 +192,18 @@ public class ManageAccountsJPanel extends javax.swing.JPanel {
                     "Account number not found", 
                     "Warning", 
                     JOptionPane.WARNING_MESSAGE);
+            txtSearchBox.setText("");
             return;
         }
-        
+                
         ViewAccountJPanel panel = new ViewAccountJPanel(userProcessContainer, 
                 accountNumToSearch);
         userProcessContainer.add("ViewAccountJPanel", panel);
         
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
+        
+        txtSearchBox.setText("");
     }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
