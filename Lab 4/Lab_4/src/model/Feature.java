@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author archil
+ * @author Shreyas Purkar
  */
 public class Feature {
     

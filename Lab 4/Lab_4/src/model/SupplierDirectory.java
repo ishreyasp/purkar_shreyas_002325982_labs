@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Rushabh
+ * @author Shreyas Purkar
  */
 public class SupplierDirectory {
     
