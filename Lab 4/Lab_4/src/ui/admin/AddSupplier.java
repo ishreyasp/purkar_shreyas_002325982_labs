@@ -192,6 +192,7 @@ public class AddSupplier extends javax.swing.JPanel {
         // TODO add your handling code here:
         Supplier supplier = supplierDirectory.addSupplier();
         supplier.setSupplyName(txtName.getText());
+        supplier.setDescription(jTextArea1.getText());
         supplier.setLogoImage(logoImage);
         
         JOptionPane.showMessageDialog(this, "Supplier successfully added", "Warning", JOptionPane.INFORMATION_MESSAGE);
