@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Map;
+
 /**
  *
  * @author Shreyas Purkar
@@ -14,6 +16,7 @@ public class Feature {
     private Product owner;
     private String name;
     private Object value;
+    private Map<String, Object> mapOfFeature;
 
     public Feature() {
     }

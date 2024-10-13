@@ -7,6 +7,8 @@ package ui.supplier;
 import model.Product;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -117,9 +119,19 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
 
         btnAddFeature.setText("Add Feature");
         btnAddFeature.setEnabled(false);
+        btnAddFeature.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddFeatureMouseClicked(evt);
+            }
+        });
         btnAddFeature.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddFeatureActionPerformed(evt);
+            }
+        });
+        btnAddFeature.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAddFeatureKeyPressed(evt);
             }
         });
 
@@ -254,14 +266,34 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
     }
 
     private void btnAddFeatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFeatureActionPerformed
-        Feature newFeature = new Feature();
-        newFeature.setName("New Feature");
-        newFeature.setValue("Type value here");
-        product.addNewFeature(newFeature);
-        
+        ArrayList<Feature> features = new ArrayList();
+        Feature firstFeature = new Feature();
+        firstFeature.setName("Color");
+        firstFeature.setValue("Type value here");
+        Feature secondFeature = new Feature();
+        secondFeature.setName("Dimension");
+        secondFeature.setValue("Type value here");
+        Feature thirdFeature = new Feature();
+        thirdFeature.setName("Weight");
+        thirdFeature.setValue("Type value here");
+        Feature fourthFeature = new Feature();
+        fourthFeature.setName("Model");
+        fourthFeature.setValue("Type value here");
+        Feature fifthFeature = new Feature();
+        fifthFeature.setName("Vendor");
+        fifthFeature.setValue("Type value here");
+        features.add(fifthFeature);
+        features.add(fourthFeature);
+        features.add(firstFeature);
+        features.add(secondFeature);
+        features.add(thirdFeature);
+        for (int i = 0; i < features.size(); i++) {
+        product.addNewFeature(features.get(i));
+        }
         saveFeatures();
         
         refreshTable();
+        
     }//GEN-LAST:event_btnAddFeatureActionPerformed
 
     private void btnRemoveFeatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFeatureActionPerformed
@@ -279,6 +311,14 @@ public class ViewProductDetailJPanel extends javax.swing.JPanel {
         refreshTable();
        
     }//GEN-LAST:event_btnRemoveFeatureActionPerformed
+
+    private void btnAddFeatureKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAddFeatureKeyPressed
+        
+    }//GEN-LAST:event_btnAddFeatureKeyPressed
+
+    private void btnAddFeatureMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddFeatureMouseClicked
+        btnAddFeature.setEnabled(false);
+    }//GEN-LAST:event_btnAddFeatureMouseClicked
 
     public void refreshTable() {
 
