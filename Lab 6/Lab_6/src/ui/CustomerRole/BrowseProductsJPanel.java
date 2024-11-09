@@ -7,6 +7,7 @@ package ui.CustomerRole;
 
 import model.Product;
 import model.Supplier;
+import model.OrderItem;
 import model.SupplierDirectory;
 import ui.CustomerRole.ViewProductDetailJPanel;
 import java.awt.CardLayout;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import model.MasterOrderList;
-import ui.SupplierRole.SupplierWorkAreaJPanel;
+import model.Order;
 
 
 /**
@@ -27,7 +28,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     SupplierDirectory supplierDirectory;
     MasterOrderList masterOrderList;
-
+    Order currentOrder;
 
     /** Creates new form BrowseProducts */
     public BrowseProductsJPanel(JPanel userProcessContainer, SupplierDirectory supplierDirectory, MasterOrderList masterOrderList) {
@@ -36,9 +37,10 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         this.userProcessContainer = userProcessContainer;
         this.supplierDirectory = supplierDirectory;
         this.masterOrderList = masterOrderList;
-        
+        currentOrder = new Order();
         populateComboBox();
         populateProductTable();
+        populateCartTable();
     }
 
     
@@ -141,6 +143,11 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         spnQuantity.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnAddToCart.setText("Add to Cart");
+        btnAddToCart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToCartActionPerformed(evt);
+            }
+        });
 
         btnProductDetails.setText("View Product Details");
         btnProductDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -246,7 +253,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(lblTitle)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {spnQuantity, txtSalesPrice});
@@ -276,7 +283,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
                     .addComponent(lblQuantity)
                     .addComponent(spnQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddToCart))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblItemsInCart)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,9 +293,9 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
                     .addComponent(btnRemoveOrderItem)
                     .addComponent(btnModifyQuantity)
                     .addComponent(txtNewQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jScrollPane1, jScrollPane2});
@@ -342,6 +349,48 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnViewOrderItemActionPerformed
 
+    private void btnAddToCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartActionPerformed
+        int selectedRowIndex = tblProductCatalog.getSelectedRow();
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select product first");
+            return;
+        }
+        Product product = (Product) tblProductCatalog.getValueAt(selectedRowIndex, 0);
+        double salesPrice = 0.0;
+        int qty = 0;
+        try {
+            salesPrice = Double.parseDouble(txtSalesPrice.getText());
+            qty = (Integer) spnQuantity.getValue();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Please check price and quantity fields");
+            return;
+        }
+        if(salesPrice < product.getPrice()) {
+            JOptionPane.showMessageDialog(this, "Price should be more than it is set in price");
+            return;
+        }
+        OrderItem item = currentOrder.findProduct(product);
+        if(item==null) {
+            if(product.getAvail() >= qty){
+                currentOrder.addNewOrderItem(product, salesPrice, qty);
+                product.setAvail(product.getAvail() - qty);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please chec product availability");
+                return;
+            }
+        } else {
+            int oldQty = item.getQuantity();
+            if(item.getProduct().getAvail() + oldQty < qty) {
+                JOptionPane.showMessageDialog(this, "Please chec product availability");
+                return;
+            }
+            item.getProduct().setAvail(item.getProduct().getAvail() + oldQty - qty);
+            item.setQuantity(qty);
+        }
+        populateProductTable();
+        populateCartTable();
+    }//GEN-LAST:event_btnAddToCartActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddToCart;
@@ -391,6 +440,21 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
             row[1] = p.getModelNumber();
             row[2] = p.getPrice();
             row[3] = p.getAvail();
+            model.addRow(row);
+        }
+    }
+    
+    private void populateCartTable() {
+        
+        DefaultTableModel model = (DefaultTableModel) tblCart.getModel();
+        model.setRowCount(0);
+
+        for (OrderItem oi : currentOrder.getOrderItemList()) {
+            Object row[] = new Object[4];
+            row[0] = oi;
+            row[1] = oi.getSalesPrice();
+            row[2] = oi.getQuantity();
+            row[3] = oi.getSalesPrice() * oi.getQuantity();
             model.addRow(row);
         }
     }
