@@ -332,8 +332,29 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckOutActionPerformed
 
     private void btnModifyQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyQuantityActionPerformed
-        // TODO add your handling code here:
+        int selectedRowIndex = tblCart.getSelectedRow();
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select product first");
+            return;
+        }
+        OrderItem item = (OrderItem) tblCart.getValueAt(selectedRowIndex, 0);
+        int qty = 0;
+        try {
+            qty = Integer.parseInt(txtNewQuantity.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Please check modified qyantity field");
+            return;
+        }
+        int oldQty = item.getQuantity();
+        if(item.getProduct().getAvail() + oldQty < qty) {
+            JOptionPane.showMessageDialog(this, "Please chec product availability");
+            return;
+        }
+        item.getProduct().setAvail(item.getProduct().getAvail() + oldQty - qty);
+        item.setQuantity(qty);
         
+        populateCartTable();
+        populateProductTable();
     }//GEN-LAST:event_btnModifyQuantityActionPerformed
 
     private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
@@ -342,7 +363,19 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSearchProductActionPerformed
 
     private void btnRemoveOrderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveOrderItemActionPerformed
-       
+       int selectedRowIndex = tblCart.getSelectedRow();
+        if(selectedRowIndex < 0) {
+            JOptionPane.showMessageDialog(this, "Please select product first");
+            return;
+        }
+        OrderItem item = (OrderItem) tblCart.getValueAt(selectedRowIndex, 0);
+        int qty = 0;
+                
+        item.getProduct().setAvail(item.getProduct().getAvail() + item.getQuantity());
+        currentOrder.deleteItem(item);
+        
+        populateCartTable();
+        populateProductTable();
     }//GEN-LAST:event_btnRemoveOrderItemActionPerformed
 
     private void btnViewOrderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderItemActionPerformed
