@@ -319,7 +319,7 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select product first");
             return;
         }
-        Product product = (Product) cmbSupplier.getSelectedItem();
+        Product product = (Product) tblProductCatalog.getValueAt(selectedRowIndex, 0);
         ViewProductDetailJPanel vpjp = new ViewProductDetailJPanel(userProcessContainer, product);
         userProcessContainer.add("ViewProductDetailJPanel", vpjp);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
@@ -330,6 +330,17 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
         masterOrderList.addNewOrder(currentOrder);
         currentOrder = new Order();
        
+        populateComboBox();
+        populateProductTable();
+        populateCartTable();
+        
+        txtNewQuantity.setText("");
+        txtSalesPrice.setText("");
+        txtSearch.setText("");
+        
+        spnQuantity.setValue(0);
+        
+        JOptionPane.showMessageDialog(this, "Thank you visit again!!");
     }//GEN-LAST:event_btnCheckOutActionPerformed
 
     private void btnModifyQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyQuantityActionPerformed
@@ -361,18 +372,6 @@ public class BrowseProductsJPanel extends javax.swing.JPanel {
     private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
         String productName = txtSearch.getText();
         populateProductTable(productName);
-        
-        populateComboBox();
-        populateProductTable();
-        populateCartTable();
-        
-        txtNewQuantity.setText("");
-        txtSalesPrice.setText("");
-        txtSearch.setText("");
-        
-        spnQuantity.setValue(0);
-        
-        JOptionPane.showMessageDialog(this, "Thank you visit again!!");
     }//GEN-LAST:event_btnSearchProductActionPerformed
 
     private void btnRemoveOrderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveOrderItemActionPerformed
