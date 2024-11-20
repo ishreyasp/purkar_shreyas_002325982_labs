@@ -98,5 +98,6 @@ public class SocialMedia_Main {
         helper.generateMaxLikeCommentPost();
         helper.getPostWithMostComments();
         helper.getPassiveUsers();
+        helper.getPassiveCommentUsers();
     }
 }
