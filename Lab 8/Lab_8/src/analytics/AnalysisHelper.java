@@ -11,8 +11,13 @@ package analytics;
  */
 
 import data.DataStore;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import model.Comment;
+import model.Post;
+import model.User;
 
 
 public class AnalysisHelper {
@@ -26,8 +31,25 @@ public class AnalysisHelper {
             likeNumber += c.getLikes();
         }
         
-        System.out.println("Average number of likes per comments: " + likeNumber / commentNumber);
+        System.out.println("Q1). Average number of likes per comments: " + likeNumber / commentNumber);
             
     }
+    
+    public void generateMaxLikeCommentPost() {
+        DataStore data = DataStore.getInstance();
+        Comment commentWithMaxLikes = null;
+        
+        for(Comment c : data.getComments().values()) {
+            if(commentWithMaxLikes == null) {
+                commentWithMaxLikes = c;
+            }
+            if(c.getLikes() > commentWithMaxLikes.getLikes()) {
+                commentWithMaxLikes = c;
+            }
+        }
+        int postId = commentWithMaxLikes.getPostId();
+        System.out.println("Q2). Posts with most likes per comments: " + data.getPosts().get(postId).getPostId());
+    }
+    
     
 }
