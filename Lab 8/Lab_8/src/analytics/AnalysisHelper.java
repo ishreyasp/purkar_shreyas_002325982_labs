@@ -51,5 +51,18 @@ public class AnalysisHelper {
         System.out.println("Q2). Posts with most likes per comments: " + data.getPosts().get(postId).getPostId());
     }
     
-    
+    public void getPostWithMostComments() {
+        DataStore data = DataStore.getInstance();
+        Post postWithMostComments = null;
+        
+        for(Post p : data.getPosts().values()) {
+            if(postWithMostComments == null) {
+                postWithMostComments = p;
+            }
+            if(p.getComments().size() > postWithMostComments.getComments().size()) {
+                postWithMostComments = p;
+            }
+        }
+        System.out.println("Q3). Posts with most comments: " + postWithMostComments.getPostId());
+    }
 }
